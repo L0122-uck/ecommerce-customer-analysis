@@ -1,201 +1,159 @@
+# 电商用户留存与RFM分析项目
 # E-commerce Customer Retention & RFM Analysis
 
-## 1. Project Overview
 
-This project analyzes customer purchase behavior based on a real-world Brazilian e-commerce transaction dataset.
+## 项目介绍 | Project Overview
 
-The goal is to understand:
+本项目基于 Brazilian E-Commerce Public Dataset 真实电商订单数据，
+使用 MySQL + Python 对用户购买行为进行分析。
 
-- Customer repeat purchase behavior
-- Customer retention patterns
-- Customer value segmentation
+主要目标：
 
-The project builds a complete data analysis pipeline:
+- 分析用户复购行为
+- 分析用户留存情况
+- 构建RFM用户价值分析模型
 
-**Raw Data → MySQL Database → SQL Analysis → Python Visualization → Business Insights**
 
----
+数据分析流程：
 
-## 2. Tech Stack
+原始数据
+→ MySQL数据库建表
+→ SQL业务分析
+→ Python数据可视化
+→ 输出业务结论
 
-- **Database:** MySQL
-- **Programming Language:** Python
-- **Data Processing:** Pandas
-- **Visualization:** Matplotlib, Seaborn
-- **SQL Techniques:**
-  - JOIN
-  - GROUP BY
-  - CASE WHEN
-  - Common Table Expression (CTE)
-  - Cohort Analysis
 
 ---
 
-## 3. Dataset
+## 技术栈 | Tech Stack
 
-Dataset:
+- SQL（MySQL）
+- Python
+- Pandas
+- Matplotlib
+- Seaborn
+
+
+SQL技能：
+
+- SELECT
+- JOIN
+- GROUP BY
+- 聚合函数
+- CTE
+- 用户留存分析
+- RFM分析
+
+
+---
+
+## 数据集
+
+数据来源：
 
 Brazilian E-Commerce Public Dataset
 
-Main tables:
 
-- `customers`
-- `orders`
-- `order_items`
+主要数据表：
 
-Data scale:
+- customers（用户信息）
+- orders（订单信息）
+- order_items（商品订单信息）
 
-- 99k+ orders
-- 99k+ customers
-- 100k+ order item records
 
----
+数据规模：
 
-## 4. Database Construction
+- 99k+订单
+- 99k+用户
 
-Imported raw CSV files into MySQL and built relational tables.
-
-Data relationship:
-customers
-|
-customer_id
-|
-orders
-|
-order_id
-|
-order_items
 
 ---
 
-# 5. Analysis
+## 分析内容
 
-## 5.1 Repeat Purchase Analysis
 
-Analyzed customer purchase frequency and calculated repeat purchase behavior.
+### 1. 用户复购分析
 
-Methods:
+分析用户购买次数以及重复购买行为。
 
-- Customer-level aggregation
-- JOIN customer and order tables
-- COUNT order frequency
 
-SQL file:
+SQL：
 sql/01_repeat_purchase.sql
 
----
-
-## 5.2 Customer Value Analysis
-
-Analyzed customer spending behavior based on:
-
-- Number of orders
-- Total spending amount
-
-SQL file:
-sql/02_customer_value_analysis.sql
 
 ---
 
-## 5.3 Cohort Retention Analysis
+### 2. 用户留存分析（Cohort Analysis）
 
-Grouped customers by their first purchase month and analyzed subsequent purchasing behavior.
+根据用户首次购买月份划分用户群体，
+分析不同月份用户后续活跃情况。
 
-Metrics:
 
-- First purchase cohort
-- Monthly active customers
-- Customer retention trend
+结果：
 
-SQL files:
-sql/03_retention_analysis.sql
+![Retention Heatmap](result/images/retention_heatmap.png)
 
-sql/04_cohort_retention_matrix.sql
-
-Visualization:
-
-![Customer Retention](result/images/retention_heatmap.png)
 
 ---
 
-## 5.4 RFM Customer Segmentation
+### 3. RFM用户价值分析
 
-Built an RFM analysis model based on:
+基于：
 
-| Metric | Description |
-|---|---|
-| Recency | Time since last purchase |
-| Frequency | Number of purchases |
-| Monetary | Total spending amount |
-
-SQL file:
-sql/05_rfm_analysis.sql
-
-Visualization:
-
-![Customer Value Distribution](result/images/rfm_distribution.png)
-
----
-
-# 6. Visualization Results
-
-## Monthly Sales Trend
-
-![Monthly Sales](result/images/monthly_sales.png)
+- R（Recency）：最近一次购买时间
+- F（Frequency）：购买频率
+- M（Monetary）：消费金额
 
 
-## Customer Retention Heatmap
-
-![Retention](result/images/retention_heatmap.png)
+分析不同价值用户群体。
 
 
-## Customer Value Distribution
+结果：
 
 ![RFM](result/images/rfm_distribution.png)
 
----
-
-# 7. Key Findings
-
-Based on the analysis:
-
-- Most customers made only a single purchase, indicating challenges in customer retention.
-- A small group of customers contributed a large proportion of total spending.
-- Customer activity decreased as the time after first purchase increased.
-- RFM analysis helped identify different customer value groups.
 
 ---
 
-# 8. Project Structure
+### 4. 销售趋势分析
+
+
+分析月度销售变化趋势。
+
+
+结果：
+
+![Sales](result/images/monthly_sales.png)
+
+
+
+---
+
+## 项目结构
 ecommerce/
 
 ├── data/
-│ └── raw/
-
-├── scripts/
-│ ├── import_data.py
-│ ├── import_orders.py
-│ └── import_order_items.py
-
 ├── sql/
-│ ├── 01_repeat_purchase.sql
-│ ├── 02_customer_value_analysis.sql
-│ ├── 03_retention_analysis.sql
-│ ├── 04_cohort_retention_matrix.sql
-│ └── 05_rfm_analysis.sql
-
+├── scripts/
 ├── result/
-│ ├── data_result/
-│ └── images/
-
 ├── analysis_visualization.py
-
 └── README.md
+
 
 ---
 
-# 9. Future Improvements
+## 分析结论
 
-- Add customer churn prediction model
-- Build interactive dashboard using Tableau / Power BI
-- Perform customer lifetime value (CLV) analysis
+- 大部分用户购买次数较少，存在提升复购率的空间；
+- 少量高价值用户贡献较高消费金额；
+- 用户留存率随着首次购买时间增加逐渐下降；
+- RFM模型可以帮助识别不同价值用户群体。
+
+
+---
+
+## 后续优化
+
+- 增加用户流失预测模型
+- 使用Power BI/Tableau制作交互式看板
+- 进行用户生命周期价值（CLV）分析
